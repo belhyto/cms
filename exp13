@@ -1,5 +1,5 @@
 ; Supermarket Billing System Simulation
-; Time unit: 1 minute
+; Time unit:1 minute
 
 ; ------------ Customer Arrival ------------
         GENERATE    6            ; A customer arrives every 6 minutes
