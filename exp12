@@ -1,0 +1,27 @@
+; Airline System Simulation
+; Time unit: 1 minute
+; ------------ Passenger Arrival ------------
+        GENERATE    5            ; A new passenger arrives every 5 minutes (mean)
+        QUEUE       CheckInQ     ; Queue for check-in
+        SEIZE       CheckIn      ; Seize a check-in counter
+        DEPART      CheckInQ     ; Leave the check-in queue
+        ADVANCE     4            ; Takes 4 minutes to check in
+        RELEASE     CheckIn      ; Free the counter
+; ------------ Security Check ------------
+        QUEUE       SecurityQ    ; Queue for security
+        SEIZE       Security     ; Seize a security checkpoint
+        DEPART      SecurityQ    ; Leave the security queue
+        ADVANCE     3            ; Takes 3 minutes for security
+        RELEASE     Security     ; Release the checkpoint
+; ------------ Boarding Gate ------------
+        ADVANCE     2            ; Takes 2 minutes to reach the gate
+        TERMINATE                ; Passenger completes the process
+; ------------ Facilities ------------
+
+; ------------ Simulation Timer ------------
+        GENERATE    480          ; End simulation after 8 hours
+        TERMINATE   1
+
+; ------------ Start Simulation ------------
+        START       1
+        END
