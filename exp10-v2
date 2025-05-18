@@ -1,0 +1,29 @@
+; Quality Control (QC) System Simulation
+; Products inspected by QC inspectors and either accepted or rejected
+; Time unit: 1 minute
+
+; Product Arrival
+        GENERATE    10,4            ; Products arrive every ~10 minutes
+        QUEUE       QCLine          ; Queue for QC inspectors
+        ENTER       InspectorStorage ; Occupy an inspector
+        DEPART      QCLine          ; Leave QC queue
+
+        ADVANCE     5,2             ; Inspection time (~5 minutes)
+        LEAVE       InspectorStorage ; Free inspector
+
+        TRANSFER    0.8,Accepted,Rejected ; 80% pass, 20% fail inspection
+
+Accepted TERMINATE                   ; Accepted products leave system
+
+Rejected TERMINATE                   ; Rejected products leave system (or rework)
+
+; Timer to end simulation after 8 hours (480 minutes)
+        GENERATE    480
+        TERMINATE   1               ; End simulation run
+
+; Storage representing number of QC inspectors available (e.g., 2 inspectors)
+InspectorStorage STORAGE 2
+
+; Control
+        START       1
+        END
