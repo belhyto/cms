@@ -1,0 +1,25 @@
+; Supermarket Billing System Simulation
+; Time unit: 1 minute
+; One billing counter, customers arrive every ~6 minutes, billing takes ~5 minutes
+
+; Customer Arrival
+        GENERATE    6,2              ; Customers arrive every ~6 minutes
+        QUEUE       BillingQueue     ; Enter the billing queue
+        ENTER       BillingCounter   ; Occupy the billing counter
+        DEPART      BillingQueue     ; Leave the queue
+        ADVANCE     5                ; Billing takes 5 minutes
+        LEAVE       BillingCounter   ; Free the billing counter
+
+        ADVANCE     2                ; Takes 2 minutes to exit the store
+        TERMINATE                    ; Customer exits system
+
+; End simulation after 8 hours (480 minutes)
+        GENERATE    480
+        TERMINATE   1                ; Ends simulation
+
+; Resource: One billing counter
+BillingCounter    STORAGE 1
+
+; Control
+        START       1
+        END
