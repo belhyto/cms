@@ -1,27 +1,33 @@
-; Airline System Simulation
+; Airline Passenger Processing System
+; Simulates passenger flow: Check-in -> Security -> Boarding Gate
 ; Time unit: 1 minute
-; ------------ Passenger Arrival ------------
-        GENERATE    5            ; A new passenger arrives every 5 minutes (mean)
-        QUEUE       CheckInQ     ; Queue for check-in
-        SEIZE       CheckIn      ; Seize a check-in counter
-        DEPART      CheckInQ     ; Leave the check-in queue
-        ADVANCE     4            ; Takes 4 minutes to check in
-        RELEASE     CheckIn      ; Free the counter
-; ------------ Security Check ------------
-        QUEUE       SecurityQ    ; Queue for security
-        SEIZE       Security     ; Seize a security checkpoint
-        DEPART      SecurityQ    ; Leave the security queue
-        ADVANCE     3            ; Takes 3 minutes for security
-        RELEASE     Security     ; Release the checkpoint
-; ------------ Boarding Gate ------------
-        ADVANCE     2            ; Takes 2 minutes to reach the gate
-        TERMINATE                ; Passenger completes the process
-; ------------ Facilities ------------
 
-; ------------ Simulation Timer ------------
-        GENERATE    480          ; End simulation after 8 hours
-        TERMINATE   1
+; Passenger Arrival
+        GENERATE    5,2             ; Passengers arrive every ~5 minutes
+        QUEUE       CheckInLine     ; Queue for check-in
+        ENTER       CheckInStorage  ; Occupy check-in counter
+        DEPART      CheckInLine     ; Leave check-in queue
+        ADVANCE     4               ; Check-in time (4 minutes)
+        LEAVE       CheckInStorage  ; Free check-in counter
 
-; ------------ Start Simulation ------------
+        QUEUE       SecurityLine    ; Queue for security
+        ENTER       SecurityStorage ; Occupy security checkpoint
+        DEPART      SecurityLine    ; Leave security queue
+        ADVANCE     3               ; Security screening (3 minutes)
+        LEAVE       SecurityStorage ; Free security checkpoint
+
+        ADVANCE     2               ; Walk to boarding gate (2 minutes)
+
+        TERMINATE                  ; Passenger boards flight (leaves system)
+
+; Timer to end simulation after 8 hours (480 minutes)
+        GENERATE    480
+        TERMINATE   1               ; End simulation run
+
+; Storage resources (one server each)
+CheckInStorage    STORAGE 1          ; 1 check-in counter
+SecurityStorage   STORAGE 1          ; 1 security checkpoint
+
+; Control
         START       1
         END
