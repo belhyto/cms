@@ -1,33 +1,27 @@
-; --- DUMP TRUCK- Supermarket Billing System Simulation in GPSS ---
+; Dump Truck Simulation
+; One truck, two facilities (LoadSite and DumpSite)
+; Time unit: 1 minute
 
-SIMULATE
+; Truck Process
+        GENERATE    20,5        ; Truck starts every 20±5 minutes
+        SEIZE       LoadSite    ; Request loading site
+        ADVANCE     10,2        ; Loading takes 10±2 minutes
+        RELEASE     LoadSite    ; Done loading
 
-; Define a facility for the billing counter
-; Define table for collecting queue statistics
-SEIZE  BILLING_COUNTER
-QUEUE     BILL_QUEUE
+        ADVANCE     15          ; Travel to dump site
 
-; Customer arrival every 6 minutes
-GENERATE 6       ; One customer every 6 minutes
+        SEIZE       DumpSite    ; Request dump site
+        ADVANCE     5,1         ; Dumping takes 5±1 minutes
+        RELEASE     DumpSite    ; Done dumping
 
-; Queue for billing counter
-QUEUE    BILL_QUEUE       ; Join billing queue
-SEIZE    BILLING_COUNTER  ; Request the counter
-DEPART   BILL_QUEUE       ; Leave billing queue
+        ADVANCE     15          ; Return to load site
 
-; Billing time is 5 minutes
-ADVANCE 5                 ; Time taken for billing
+        TERMINATE               ; End one full truck cycle
 
-; Release counter
-RELEASE BILLING_COUNTER
+; Timer
+        GENERATE    480         ; Simulation runs for 480 minutes (8 hours)
+        TERMINATE   1           ; End the simulation
 
-; Exit delay of 2 minutes
-ADVANCE 2                 ; Time taken to exit
-
-; Transaction terminates
-TERMINATE 1
-
-; Simulation runtime: 8 hours = 480 minutes
-START 480
-
-END
+; Control
+        START       1           ; Start the simulation
+        END                     ; End of GPSS program
