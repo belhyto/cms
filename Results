@@ -1,0 +1,29 @@
+Facilities (Barbers)
+Each barber — Barber1, Barber2, and Barber3 — shows the same statistics:
+Avg. utilization: 86.04%
+Each barber was busy 86% of the time (~413 minutes).
+Entries: 26
+Each served 26 customers, so 78 total customers were served.
+Avg. time/Trans.: 15.885 minutes
+Average haircut time was close to expected (16 ± 4 mins).
+Available: no
+All barbers were busy at simulation end.
+ Queue ("Line")
+Maximum content: 1
+At most, only one customer was waiting at a time — very efficient.
+Average content: 0.160
+On average, the queue had only 0.16 customers.
+Total entries: 27
+27 customers had to wait at least briefly.
+Zero entries: 12
+12 customers were served immediately with no wait.
+Percent zeros: 44.44%
+Nearly 45% of customers didn’t have to wait.
+Avg. time/Trans.: 2.852 mins
+Average wait time for those who queued.
+$ Avg. time/Trans.: 5.133 mins
+Weighted average including all customers.
+Current content: 1
+One customer still in queue at closing time.
+The multi-server setup is working efficiently. High utilization (86%) of all barbers. Minimal queueing: most customers didn’t wait or waited very briefly. The system handled a high customer volume (78 served) smoothly in 8 hours.
+
